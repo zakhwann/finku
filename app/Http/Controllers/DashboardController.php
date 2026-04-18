@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Budget;
 
 class DashboardController extends Controller
 {
@@ -65,9 +66,68 @@ class DashboardController extends Controller
             ];
         });
 
+        // Widget budget - ambil budget & realisasi bulan ini
+    $budgetWidget = Budget::where('user_id', $user->id)
+    ->where('month', $now->month)
+    ->where('year', $now->year)
+    ->with('category')
+    ->get()
+    ->map(function ($budget) use ($user, $now) {
+        $terpakai = Transaction::where('user_id', $user->id)
+            ->where('category_id', $budget->category_id)
+            ->where('type', 'expense')
+            ->whereMonth('transaction_date', $now->month)
+            ->whereYear('transaction_date', $now->year)
+            ->sum('amount');
+
+        $pct = $budget->amount > 0
+            ? min(round(($terpakai / $budget->amount) * 100), 100)
+            : 0;
+
+        return [
+            'name'     => $budget->category->name,
+            'color'    => $budget->category->color,
+            'budget'   => $budget->amount,
+            'terpakai' => $terpakai,
+            'pct'      => $pct,
+            'over'     => $terpakai > $budget->amount,
+        ];
+    });
+
+    // Warning budget yang sudah melebihi 80%
+    $budgetWarnings = Budget::where('user_id', $user->id)
+    ->where('month', $now->month)
+    ->where('year', $now->year)
+    ->with('category')
+    ->get()
+    ->map(function ($budget) use ($user, $now) {
+        $terpakai = Transaction::where('user_id', $user->id)
+            ->where('category_id', $budget->category_id)
+            ->where('type', 'expense')
+            ->whereMonth('transaction_date', $now->month)
+            ->whereYear('transaction_date', $now->year)
+            ->sum('amount');
+
+        $pct = $budget->amount > 0
+            ? round(($terpakai / $budget->amount) * 100)
+            : 0;
+
+        return [
+            'name'     => $budget->category->name,
+            'color'    => $budget->category->color,
+            'pct'      => $pct,
+            'over'     => $terpakai > $budget->amount,
+            'terpakai' => $terpakai,
+            'budget'   => $budget->amount,
+        ];
+    })
+    ->filter(fn($b) => $b['pct'] >= 80)
+    ->sortByDesc('pct')
+    ->values();
+
         return view('dashboard', compact(
             'totalIncome', 'totalExpense', 'balance',
-            'recentTransactions', 'expenseByCategory', 'chartData'
+            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings'
         ));
     }
 }

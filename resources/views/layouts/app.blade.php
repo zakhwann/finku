@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finku — {{ $title ?? 'Dashboard' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap');
+    <style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&family=Sora:wght@300;400;500;600&display=swap');@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -44,7 +43,7 @@
         }
 
         .logo-text {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Fraunces', serif;
             font-size: 18px;
             color: #fff;
             letter-spacing: -0.3px;
@@ -141,7 +140,7 @@
         }
 
         .page-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Fraunces', serif;
             font-size: 26px;
             color: #1a1f2e;
             letter-spacing: -0.5px;
@@ -236,12 +235,13 @@
     <aside class="sidebar">
         <div class="logo">
             <div class="logo-mark">
-                <div class="logo-icon">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 2L13 5V11L8 14L3 11V5L8 2Z" stroke="#90b4f0" stroke-width="1.5" fill="none"/>
-                        <circle cx="8" cy="8" r="2" fill="#90b4f0"/>
-                    </svg>
-                </div>
+                <div style="width:36px;height:36px;flex-shrink:0;">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="14" fill="#2e5fba"/>
+        <circle cx="16" cy="16" r="10" fill="none" stroke="#5a8ee8" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="16" y="21" text-anchor="middle" font-family="serif" font-size="14" font-weight="600" fill="#fff">F</text>
+    </svg>
+</div>
                 <div>
                     <div class="logo-text">Finku</div>
                     <div class="logo-sub">Personal Finance</div>
@@ -264,6 +264,16 @@
                 <span class="nav-icon">◈</span> Kategori
             </a>
 
+            <a href="{{ route('budgets.index') }}"
+               class="nav-item {{ request()->routeIs('budgets.*') ? 'active' : '' }}">
+                <span class="nav-icon">◎</span> Budget
+            </a>
+
+            <a href="{{ route('reports.index') }}"
+                class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                <span class="nav-icon">📄</span> Laporan
+            </a>
+            
             <div class="nav-label">Akun</div>
             <span class="nav-item" style="cursor:default;opacity:0.5;">
                 <span class="nav-icon">◎</span> {{ Auth::user()->name }}
@@ -295,7 +305,7 @@
         @if(session('error'))
             <div class="alert alert-error">{{ session('error') }}</div>
         @endif
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
         {{ $slot }}
     </main>
 </body>

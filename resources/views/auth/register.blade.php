@@ -210,12 +210,13 @@
         <!-- Kiri -->
         <div class="auth-left">
             <div class="brand">
-                <div class="brand-icon">
-                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 2L13 5V11L8 14L3 11V5L8 2Z" stroke="#90b4f0" stroke-width="1.5" fill="none"/>
-                        <circle cx="8" cy="8" r="2" fill="#90b4f0"/>
-                    </svg>
-                </div>
+                <div style="width:36px;height:36px;flex-shrink:0;">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="14" fill="#2e5fba"/>
+        <circle cx="16" cy="16" r="10" fill="none" stroke="#5a8ee8" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="16" y="21" text-anchor="middle" font-family="serif" font-size="14" font-weight="600" fill="#fff">F</text>
+    </svg>
+</div>
                 <div class="brand-name">Finku</div>
             </div>
 
