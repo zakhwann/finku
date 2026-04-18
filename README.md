@@ -47,7 +47,7 @@ Aplikasi manajemen keuangan pribadi berbasis web yang dibangun dengan Laravel 12
 ```
 
 ## 📸 Screenshot
-> *Coming soon*
+![Dashboard]<img width="1904" height="865" alt="Image" src="https://github.com/user-attachments/assets/eeb2e08d-b3e4-4a70-b6bf-d113a7ec2bca" />
 
 ## 👨‍💻 Developer
 **Zakhwan** — D3 Sistem Informasi
