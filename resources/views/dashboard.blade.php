@@ -79,6 +79,30 @@
             <div style="font-size:12px;color:#8a96b0;">Bulan {{ now()->translatedFormat('F Y') }}</div>
         </div>
     </div>
+    
+    {{-- Debt Summary Widget --}}
+@if($debtSummary['totalOwe'] > 0 || $debtSummary['totalLend'] > 0)
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+    <a href="{{ route('debts.index') }}" style="text-decoration:none;">
+        <div class="card" style="border-left:4px solid #059669;border-radius:0 14px 14px 0;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">💰</div>
+            <div>
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a96b0;font-weight:600;">Piutang Aktif</div>
+                <div style="font-family:'Fraunces',serif;font-size:20px;color:#059669;">Rp {{ number_format($debtSummary['totalLend'], 0, ',', '.') }}</div>
+            </div>
+        </div>
+    </a>
+    <a href="{{ route('debts.index') }}" style="text-decoration:none;">
+        <div class="card" style="border-left:4px solid #dc2626;border-radius:0 14px 14px 0;display:flex;align-items:center;gap:14px;">
+            <div style="font-size:24px;">💸</div>
+            <div>
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a96b0;font-weight:600;">Hutang Aktif</div>
+                <div style="font-family:'Fraunces',serif;font-size:20px;color:#dc2626;">Rp {{ number_format($debtSummary['totalOwe'], 0, ',', '.') }}</div>
+            </div>
+        </div>
+    </a>
+</div>
+@endif
 
     {{-- Charts Row --}}
     <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;margin-bottom:24px;">

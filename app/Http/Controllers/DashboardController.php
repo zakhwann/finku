@@ -66,7 +66,7 @@ class DashboardController extends Controller
             ];
         });
 
-        // Widget budget - ambil budget & realisasi bulan ini
+    // Widget budget - ambil budget & realisasi bulan ini
     $budgetWidget = Budget::where('user_id', $user->id)
     ->where('month', $now->month)
     ->where('year', $now->year)
@@ -125,9 +125,14 @@ class DashboardController extends Controller
     ->sortByDesc('pct')
     ->values();
 
+    // Widget hutang piutang
+    $debtSummary = [
+    'totalOwe'  => \App\Models\Debt::where('user_id', $user->id)->where('type', 'owe')->where('status', '!=', 'paid')->sum('amount'),
+    'totalLend' => \App\Models\Debt::where('user_id', $user->id)->where('type', 'lend')->where('status', '!=', 'paid')->sum('amount'),
+    ];
         return view('dashboard', compact(
             'totalIncome', 'totalExpense', 'balance',
-            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings'
+            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings', 'debtSummary'
         ));
     }
 }

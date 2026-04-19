@@ -228,6 +228,52 @@
         /* ── Amount colors ── */
         .amount-income { color: #059669; font-weight: 600; }
         .amount-expense { color: #dc2626; font-weight: 600; }
+
+        /* ── Dark Mode ── */
+body.dark {
+    background: #0a0f1e;
+    color: #c8d8f0;
+}
+
+body.dark .sidebar { background: #060d1f; border-color: rgba(255,255,255,0.04); }
+body.dark .main { background: #0a0f1e; }
+body.dark .card { background: #111827; border-color: #1e2d4a; color: #c8d8f0; }
+body.dark .card-title { color: #c8d8f0; }
+body.dark .page-title { color: #e2eaf8; }
+body.dark .page-sub { color: #4a6a9e; }
+body.dark table { color: #c8d8f0; }
+body.dark th { color: #4a6a9e; border-color: #1e2d4a; }
+body.dark td { border-color: #1a2540; color: #a0b8d8; }
+body.dark tr:hover td { background: #1a2540; }
+body.dark .form-control { background: #111827; border-color: #1e2d4a; color: #c8d8f0; }
+body.dark .form-control:focus { border-color: #2e5fba; background: #162040; }
+body.dark .form-label { color: #7a98cc; }
+body.dark .btn-secondary { background: #111827; color: #7a98cc; border-color: #1e2d4a; }
+body.dark .btn-secondary:hover { background: #1a2540; }
+body.dark .nav-label { color: #1e2d4a; }
+body.dark .alert-success { background: #064e3b; color: #6ee7b7; border-color: #065f46; }
+body.dark .alert-error { background: #7f1d1d; color: #fca5a5; border-color: #991b1b; }
+body.dark .badge-income { background: #064e3b; color: #6ee7b7; }
+body.dark .badge-expense { background: #7f1d1d; color: #fca5a5; }
+body.dark .amount-income { color: #6ee7b7; }
+body.dark .amount-expense { color: #fca5a5; }
+
+.dark-toggle {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #7a98cc;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dark-toggle:hover { background: rgba(255,255,255,0.06); color: #c8d8f0; }
     </style>
 </head>
 <body>
@@ -271,7 +317,17 @@
 
             <a href="{{ route('reports.index') }}"
                 class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                <span class="nav-icon">📄</span> Laporan
+               <span class="nav-icon">◑</span> Laporan
+            </a>
+            
+            <a href="{{ route('bills.index') }}"
+                class="nav-item {{ request()->routeIs('bills.*') ? 'active' : '' }}">
+                <span class="nav-icon">⊞</span> Split Bill
+            </a>
+
+            <a href="{{ route('debts.index') }}"
+                class="nav-item {{ request()->routeIs('debts.*') ? 'active' : '' }}">
+                <span class="nav-icon">⇄</span> Hutang
             </a>
             
             <div class="nav-label">Akun</div>
@@ -281,6 +337,11 @@
         </nav>
 
         <div class="sidebar-footer">
+            <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" style="margin-bottom:12px;width:100%;">
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" style="margin-bottom:12px;width:100%;">
+    <span id="darkIcon" class="nav-icon">◑</span>
+    <span id="darkLabel">Dark Mode</span>
+</button>
             <div class="user-chip">
                 <div class="avatar">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
@@ -308,5 +369,27 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
         {{ $slot }}
     </main>
+    <script>
+function toggleDark() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('finku-dark', isDark);
+    document.getElementById('darkIcon').textContent  = isDark ? '○' : '◑';
+    document.getElementById('darkLabel').textContent = isDark ? 'Light Mode' : 'Dark Mode';
+}
+
+// Load preference saat halaman dibuka
+(function() {
+    const isDark = localStorage.getItem('finku-dark') === 'true';
+    if (isDark) {
+        document.body.classList.add('dark');
+        document.addEventListener('DOMContentLoaded', function() {
+            const icon  = document.getElementById('darkIcon');
+            const label = document.getElementById('darkLabel');
+            if (icon)  icon.textContent  = '○';
+            if (label) label.textContent = 'Light Mode';
+        });
+    }
+})();
+</script>
 </body>
 </html>
