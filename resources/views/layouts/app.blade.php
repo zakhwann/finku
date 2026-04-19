@@ -329,7 +329,7 @@ body.dark .amount-expense { color: #fca5a5; }
                 class="nav-item {{ request()->routeIs('debts.*') ? 'active' : '' }}">
                 <span class="nav-icon">⇄</span> Hutang
             </a>
-            
+    
             <div class="nav-label">Akun</div>
             <span class="nav-item" style="cursor:default;opacity:0.5;">
                 <span class="nav-icon">◎</span> {{ Auth::user()->name }}

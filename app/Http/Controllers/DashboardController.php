@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Budget;
+use App\Services\RecommendationService;
 
 class DashboardController extends Controller
 {
@@ -130,9 +131,12 @@ class DashboardController extends Controller
     'totalOwe'  => \App\Models\Debt::where('user_id', $user->id)->where('type', 'owe')->where('status', '!=', 'paid')->sum('amount'),
     'totalLend' => \App\Models\Debt::where('user_id', $user->id)->where('type', 'lend')->where('status', '!=', 'paid')->sum('amount'),
     ];
+
+    // Smart Recommendations
+    $recommendations = (new RecommendationService())->getRecommendations();
         return view('dashboard', compact(
             'totalIncome', 'totalExpense', 'balance',
-            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings', 'debtSummary'
+            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings', 'debtSummary', 'recommendations'
         ));
     }
 }

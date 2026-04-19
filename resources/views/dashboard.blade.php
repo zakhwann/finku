@@ -55,6 +55,41 @@
         <a href="{{ route('transactions.create') }}" class="btn btn-primary">+ Tambah Transaksi</a>
     </div>
 
+    {{-- Smart Recommendations --}}
+@if($recommendations)
+<div class="card" style="margin-bottom:24px;">
+    <div class="card-header" style="margin-bottom:16px;">
+        <div class="card-title">◉ Rekomendasi Cerdas</div>
+        <div style="font-size:12px;color:#8a96b0;">Berdasarkan kondisi keuanganmu bulan ini</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+        @foreach($recommendations as $rec)
+        <div style="padding:14px 16px;border-radius:10px;border:1px solid {{ $rec['border'] }};background:{{ $rec['bg'] }};">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:{{ $rec['color'] }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">
+                    {{ $rec['icon'] }}
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:600;color:{{ $rec['color'] }};margin-bottom:4px;">
+                        {{ $rec['title'] }}
+                    </div>
+                    <div style="font-size:12px;color:#6b7280;line-height:1.5;">
+                        {{ $rec['message'] }}
+                    </div>
+                    @if($rec['action'])
+                    <a href="{{ $rec['action']['url'] }}"
+                       style="display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:{{ $rec['color'] }};text-decoration:none;">
+                        {{ $rec['action']['label'] }}
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
     {{-- Stat Cards --}}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
         <div class="card" style="background:#0f1a3a;border-color:#0f1a3a;">
@@ -79,13 +114,13 @@
             <div style="font-size:12px;color:#8a96b0;">Bulan {{ now()->translatedFormat('F Y') }}</div>
         </div>
     </div>
-    
+
     {{-- Debt Summary Widget --}}
 @if($debtSummary['totalOwe'] > 0 || $debtSummary['totalLend'] > 0)
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
     <a href="{{ route('debts.index') }}" style="text-decoration:none;">
         <div class="card" style="border-left:4px solid #059669;border-radius:0 14px 14px 0;display:flex;align-items:center;gap:14px;">
-            <div style="font-size:24px;">💰</div>
+            <div style="width:36px;height:36px;border-radius:8px;background:#e8f5ee;display:flex;align-items:center;justify-content:center;font-size:16px;color:#059669;font-weight:700;flex-shrink:0;">↑</div>
             <div>
                 <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a96b0;font-weight:600;">Piutang Aktif</div>
                 <div style="font-family:'Fraunces',serif;font-size:20px;color:#059669;">Rp {{ number_format($debtSummary['totalLend'], 0, ',', '.') }}</div>
@@ -94,7 +129,7 @@
     </a>
     <a href="{{ route('debts.index') }}" style="text-decoration:none;">
         <div class="card" style="border-left:4px solid #dc2626;border-radius:0 14px 14px 0;display:flex;align-items:center;gap:14px;">
-            <div style="font-size:24px;">💸</div>
+            <div style="width:36px;height:36px;border-radius:8px;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:16px;color:#dc2626;font-weight:700;flex-shrink:0;">↓</div>
             <div>
                 <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#8a96b0;font-weight:600;">Hutang Aktif</div>
                 <div style="font-family:'Fraunces',serif;font-size:20px;color:#dc2626;">Rp {{ number_format($debtSummary['totalOwe'], 0, ',', '.') }}</div>
