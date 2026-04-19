@@ -132,11 +132,17 @@ class DashboardController extends Controller
     'totalLend' => \App\Models\Debt::where('user_id', $user->id)->where('type', 'lend')->where('status', '!=', 'paid')->sum('amount'),
     ];
 
-    // Smart Recommendations
-    $recommendations = (new RecommendationService())->getRecommendations();
+
+    // Widget wishlist — tampilkan yang siap dibeli atau progress tertinggi
+    $wishlistWidget = \App\Models\Wishlist::where('user_id', $user->id)
+    ->whereIn('status', ['saving', 'ready'])
+    ->orderByRaw("FIELD(status, 'ready', 'saving')")
+    ->limit(3)
+    ->get();
+
         return view('dashboard', compact(
             'totalIncome', 'totalExpense', 'balance',
-            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings', 'debtSummary', 'recommendations'
+            'recentTransactions', 'expenseByCategory', 'chartData', 'budgetWidget', 'budgetWarnings', 'debtSummary', 'wishlistWidget'
         ));
     }
 }
