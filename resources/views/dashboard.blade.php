@@ -44,7 +44,7 @@
     <div class="page-header">
         <div>
             <div class="page-title" style="font-family:'Sora',sans-serif;font-weight:300;letter-spacing:-0.5px;">
-                Selamat datang, {{ Auth::user()->name }} 👋
+                Selamat datang, {{ Auth::user()->name }}
             </div>
             <div class="page-sub">{{ now()->translatedFormat('l, d F Y') }}</div>
         </div>

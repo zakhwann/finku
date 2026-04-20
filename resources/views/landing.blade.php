@@ -550,7 +550,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-brand">Finku</div>
-        <div class="footer-copy">© {{ now()->year }} Finku · Dibuat dengan ❤️ oleh Zakhwan</div>
+        <div class="footer-copy">© {{ now()->year }} Finku · Dibuat oleh Zakhwan</div>
     </footer>
 
 </body>
