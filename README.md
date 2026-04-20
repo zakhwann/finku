@@ -132,3 +132,44 @@ npm run dev
 Buka **http://127.0.0.1:8000**
 
 ### Demo Account
+Email    : demo@finku.app
+Password : password123
+
+---
+
+## 📁 Struktur Fitur
+app/
+├── Http/Controllers/
+│   ├── DashboardController.php
+│   ├── TransactionController.php
+│   ├── CategoryController.php
+│   ├── BudgetController.php
+│   ├── BillController.php
+│   ├── DebtController.php
+│   ├── WishlistController.php
+│   └── ReportController.php
+├── Models/
+│   ├── Transaction.php
+│   ├── Category.php
+│   ├── Budget.php
+│   ├── BillSession.php
+│   ├── BillMember.php
+│   ├── BillItem.php
+│   ├── Debt.php
+│   └── Wishlist.php
+└── Services/
+└── RecommendationService.php
+
+---
+
+## 👨‍💻 Developer
+
+**Zakhwan** — D3 Sistem Informasi
+
+[![GitHub](https://img.shields.io/badge/GitHub-zakhwann-181717?style=flat&logo=github)](https://github.com/zakhwann)
+
+---
+
+## 📄 License
+
+MIT License — bebas digunakan untuk keperluan belajar dan portfolio.
